@@ -79,20 +79,19 @@ Open your browser and go to:
 
 http://localhost:5000/
 
+**From the dashboard, you can:**
 
-From the dashboard, you can:
+- Assign roles to members
 
-Assign roles to members
+- Create polls in any channel
 
-Create polls in any channel
-
-View live server stats
+- View live server stats
 
 ## 6. Optional: Run in the Background
 
 Use a terminal multiplexer like tmux or screen, or deploy to Heroku / VPS for continuous uptime.
 
-**Usage**
+## Usage
 
 ### Bot Commands (Discord)
 
