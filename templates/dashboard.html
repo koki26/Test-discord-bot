@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discord Bot Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+    body {
+        background-color: #1a1b2b;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+        background-color: #2a2a40;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        margin-bottom: 20px;
+    }
+    .btn-primary {
+        background-color: #5865F2;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #4752c4;
+    }
+    .container {
+        padding-top: 40px;
+        max-width: 1200px;
+    }
+    h1 {
+        font-weight: 700;
+        margin-bottom: 40px;
+    }
+    .stat-box {
+        background-color: #3a3a60;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: transform 0.2s;
+    }
+    .stat-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Discord Bot Dashboard</h1>
+
+    <!-- Server Stats -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="stat-box">
+                <i class="bi bi-people-fill" style="font-size: 2rem;"></i>
+                <h5 class="mt-2">Members</h5>
+                <p>{{ members|length }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <i class="bi bi-award-fill" style="font-size: 2rem;"></i>
+                <h5 class="mt-2">Roles</h5>
+                <p>{{ roles|length }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-box">
+                <i class="bi bi-lightning-fill" style="font-size: 2rem;"></i>
+                <h5 class="mt-2">Bot Latency</h5>
+                <p>{{ latency }} ms</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Assignment -->
+    <div class="card p-4 mt-4">
+        <h4 class="mb-3"><i class="bi bi-person-badge-fill"></i> Assign Roles</h4>
+        <form id="roleForm" class="row g-3">
+            <div class="col-md-6">
+                <label for="userSelect" class="form-label">Select User</label>
+                <select class="form-select" id="userSelect" name="user_id" required>
+                    {% for member in members %}
+                    <option value="{{ member.id }}">{{ member.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="roleSelect" class="form-label">Select Role</label>
+                <select class="form-select" id="roleSelect" name="role_id" required>
+                    {% for role in roles %}
+                    <option value="{{ role.id }}">{{ role.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary w-100">Assign Role <i class="bi bi-check-circle-fill"></i></button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Poll Creation -->
+<div class="card p-4 mt-4">
+    <h4 class="mb-3"><i class="bi bi-poll-fill"></i> Create Poll</h4>
+    <form id="pollForm" class="row g-3">
+        <div class="col-12">
+            <label class="form-label">Channel ID</label>
+            <input type="text" class="form-control" name="channel_id" placeholder="Enter Discord Channel ID" required>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Poll Question</label>
+            <input type="text" class="form-control" name="question" placeholder="Enter your question" required>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Options (comma-separated)</label>
+            <input type="text" class="form-control" name="options" placeholder="Option1,Option2,Option3" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary w-100">Create Poll <i class="bi bi-check-circle-fill"></i></button>
+        </div>
+    </form>
+    <div id="pollMessage" class="mt-2"></div>
+</div>
+
+<script>
+document.getElementById('pollForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await fetch('/poll', { method: 'POST', body: formData });
+    const data = await response.json();
+
+    const messageBox = document.getElementById('pollMessage');
+    if (data.success) {
+        messageBox.innerHTML = `<div class="alert alert-success mt-2">${data.message}</div>`;
+        e.target.reset();
+    } else {
+        messageBox.innerHTML = `<div class="alert alert-danger mt-2">${data.error || "Error creating poll"}</div>`;
+    }
+});
+
+document.getElementById('roleForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await fetch('/role', { method: 'POST', body: formData });
+    const data = await response.json();
+    alert(data.message || JSON.stringify(data));
+});
+
+</script>
+
+</body>
+</html>
