@@ -18,7 +18,7 @@ A **fully-featured Discord bot** with a **web dashboard** for moderation, role m
   - Ping, user info, server info
   - Reminders & scheduled announcements
 - **Fun**
-  - Jokes (not really funny rn but u can edit them if you wanna. just search "async def joke(ctx):" in bot.py :))
+  - Jokes (not really funny rn but u can edit them if you wanna. Just search "async def joke(ctx):" in bot.py 😉)
 - **Web Dashboard**
   - Role management
   - Live server stats (members, online users, bot latency)
