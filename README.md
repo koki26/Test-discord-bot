@@ -95,25 +95,27 @@ Use a terminal multiplexer like tmux or screen, or deploy to Heroku / VPS for co
 
 ### Bot Commands (Discord)
 
-Command	Description
-- !ping	Shows bot latency
-- !userinfo [user]	Displays user information
-- !serverinfo	Displays server information
-- !kick @user	Kick a user (requires permission)
-- !ban @user	Ban a user (requires permission)
-- !addrole @user role	Adds a role to a user
-- !removerole @user role	Removes a role from a user
-- !remind <minutes> <task>	Sets a reminder for you
-- !poll <question> <options>	Creates a poll in Discord
-- !joke	Sends a random joke
+| Command | Description |
+|---------|-------------|
+| `!ping` | Shows bot latency |
+| `!userinfo [user]` | Displays user information |
+| `!serverinfo` | Displays server information |
+| `!kick @user` | Kick a user (requires permission) |
+| `!ban @user` | Ban a user (requires permission) |
+| `!addrole @user role` | Adds a role to a user |
+| `!removerole @user role` | Removes a role from a user |
+| `!remind <minutes> <task>` | Sets a reminder for you |
+| `!poll <question> <options>` | Creates a poll in Discord |
+| `!joke` | Sends a random joke |
 
 ### Web Dashboard
 
-- Add roles to members
+| Feature | Description |
+|---------|-------------|
+| Assign Roles | Select a user and a role from dropdowns and click Assign |
+| Create Polls | Enter the Discord **Channel ID**, a question, and comma-separated options; bot posts poll with emoji reactions |
+| View Live Stats | See Members, Roles, and Bot latency in milliseconds |
 
-- Create polls with multiple options
-
-- View live stats: Members, Online users, Bot latency
 
 
 ## Contributing
